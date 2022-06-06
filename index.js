@@ -23,6 +23,16 @@ var relPara = document.createElement('p');
 relPara.id = "relPara";
 relPara.style.color = 'red';
 
+// create delete button element
+var deleteBtn = document.createElement('button');
+deleteBtn.id = 'deleteBtn';
+deleteBtn.innerText = "Delete Last Entry";
+deleteBtn.onclick = handleDelete;
+
+// add delete button to form element
+var form = document.getElementsByTagName('form')[0];
+form.appendChild(deleteBtn);
+
 // household list and initial empty person object
 var household = [];
 var person = {};
@@ -103,5 +113,11 @@ function handleAdd() {
         resetForm();
         console.log('household: ', household);
     }
+    return false;
+}
+
+function handleDelete() {
+    household.pop();
+    console.log('household after pop: ', household);
     return false;
 }
