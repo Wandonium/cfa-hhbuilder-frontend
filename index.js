@@ -2,8 +2,10 @@
 // get references to DOM elements
 var addBtn = document.getElementsByClassName("add")[0];
 
+
 var ageLbl = document.querySelector('[for="age"]');
 var relLbl = document.querySelector('[for="rel"]');
+var submit = document.querySelector('[type="submit"]');
 
 var ageInput = document.getElementById('age');
 var chbx = document.getElementById('smoker');
@@ -13,6 +15,7 @@ var select = document.getElementById('rel');
 addBtn.onclick = handleAdd;
 ageInput.onkeydown = handleKeyDown;
 select.onchange = handleSelect;
+submit.onclick = handleSubmit;
 
 // create error paragraphs to be added to DOM dynamically
 var agePara = document.createElement('p');
@@ -169,7 +172,7 @@ function handleAdd() {
             table.appendChild(tr);
         }
         resetForm();
-        console.log('household: ', household);
+        // console.log('household: ', household);
     }
     return false;
 }
@@ -183,6 +186,14 @@ function handleDelete() {
         table.removeChild(tr);
     }
     household.pop();
-    console.log('household after pop: ', household);
+    // console.log('household after pop: ', household);
+    return false;
+}
+
+function handleSubmit() {
+    var debug = document.getElementsByClassName('debug')[0];
+    var json = JSON.stringify(household);
+    // console.log(json);
+    debug.textContent = json;
     return false;
 }
