@@ -1,4 +1,5 @@
 
+// get references to DOM elements
 var addBtn = document.getElementsByClassName("add")[0];
 
 var ageLbl = document.querySelector('[for="age"]');
@@ -8,10 +9,12 @@ var ageInput = document.getElementById('age');
 var chbx = document.getElementById('smoker');
 var select = document.getElementById('rel');
 
+// assign event handlers to DOM elements
 addBtn.onclick = handleAdd;
 ageInput.onkeydown = handleKeyDown;
 select.onchange = handleSelect;
 
+// create error paragraphs to be added to DOM dynamically
 var agePara = document.createElement('p');
 agePara.id = "agePara";
 agePara.style.color = 'red';
@@ -20,7 +23,7 @@ var relPara = document.createElement('p');
 relPara.id = "relPara";
 relPara.style.color = 'red';
 
-
+// household list and initial empty person object
 var household = [];
 var person = {};
 
