@@ -29,6 +29,10 @@ deleteBtn.id = 'deleteBtn';
 deleteBtn.innerText = "Delete Last Entry";
 deleteBtn.onclick = handleDelete;
 
+var table = document.createElement('table');
+
+
+
 // add delete button to form element
 var form = document.getElementsByTagName('form')[0];
 form.appendChild(deleteBtn);
@@ -102,6 +106,43 @@ function resetForm () {
     person = {age: '', relationship: ''};
 }
 
+var tableBorder = 'border: 2px solid #333;'
+
+// create table to show household list
+function createTable() {
+    table.id = 'table';
+    table.style.cssText = 'border-collapse: collapse; margin-top: 2em; margin-left: 2em;'
+    var tr = document.createElement('tr');
+    tr.id = 'tr-0';
+    var th = document.createElement('th');
+    th.innerText = 'ID';
+    th.style.cssText = tableBorder;
+    tr.appendChild(th);
+    var keys = Object.keys(household[0]);
+    var values = Object.values(household[0]);
+    keys.forEach(key => {
+        var thead = document.createElement('th');
+        thead.innerText = key.toUpperCase();
+        thead.style.cssText = tableBorder;
+        tr.appendChild(thead);
+    });
+    var tr2 = document.createElement('tr');
+    tr2.id = 'tr-1';
+    var td = document.createElement('td');
+    td.innerText = '1';
+    td.style.cssText = tableBorder;
+    tr2.appendChild(td);
+    values.forEach(val => {
+        var td = document.createElement('td');
+        td.innerText = val;
+        td.style.cssText = tableBorder;
+        tr2.appendChild(td);
+    })
+    table.appendChild(tr);
+    table.appendChild(tr2);
+    document.body.appendChild(table);
+}
+
 function handleAdd() {
     if(!validateAge() && !validateRel()) {
         if(chbx.checked) {
@@ -110,6 +151,23 @@ function handleAdd() {
             person.smoker = false;
         }
         household.push(person);
+        if(household.length == 1) createTable();
+        else {
+            var values = Object.values(person);
+            var tr = document.createElement('tr');
+            tr.id = 'tr-' + household.length;
+            var td = document.createElement('td');
+            td.innerText = household.length;
+            td.style.cssText = tableBorder;
+            tr.appendChild(td);
+            values.forEach(val => {
+                var td = document.createElement('td');
+                td.innerText = val;
+                td.style.cssText = tableBorder;
+                tr.appendChild(td);
+            });
+            table.appendChild(tr);
+        }
         resetForm();
         console.log('household: ', household);
     }
@@ -117,6 +175,13 @@ function handleAdd() {
 }
 
 function handleDelete() {
+    if(household.length === 1) {
+        document.body.removeChild(table);
+    } else {
+        var tr = document.getElementById(`tr-${household.length}`);
+        console.log('tr: ', tr);
+        table.removeChild(tr);
+    }
     household.pop();
     console.log('household after pop: ', household);
     return false;
