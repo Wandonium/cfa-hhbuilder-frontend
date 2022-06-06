@@ -82,6 +82,7 @@ function validateAge () {
     return showError;
 }
 
+// validate relationship drop-down
 function validateRel () {
     var rel = select.value;
     
@@ -102,6 +103,7 @@ function validateRel () {
     return showError;
 }
 
+// reset form after add button click
 function resetForm () {
     ageInput.value = '';
     select.value = '';
@@ -111,7 +113,7 @@ function resetForm () {
 
 var tableBorder = 'border: 2px solid #333;'
 
-// create table to show household list
+// create intial table to show household list
 function createTable() {
     table.id = 'table';
     table.style.cssText = 'border-collapse: collapse; margin-top: 2em; margin-left: 2em;'
@@ -146,6 +148,7 @@ function createTable() {
     document.body.appendChild(table);
 }
 
+// handle add button click
 function handleAdd() {
     if(!validateAge() && !validateRel()) {
         if(chbx.checked) {
@@ -156,6 +159,7 @@ function handleAdd() {
         household.push(person);
         if(household.length == 1) createTable();
         else {
+            // add table row each time add button is clicked
             var values = Object.values(person);
             var tr = document.createElement('tr');
             tr.id = 'tr-' + household.length;
@@ -177,6 +181,7 @@ function handleAdd() {
     return false;
 }
 
+// delete the last item that was added to the household list
 function handleDelete() {
     if(household.length === 1) {
         document.body.removeChild(table);
@@ -190,6 +195,7 @@ function handleDelete() {
     return false;
 }
 
+// serialize household list into json and display it on debug element
 function handleSubmit() {
     var debug = document.getElementsByClassName('debug')[0];
     var json = JSON.stringify(household);
